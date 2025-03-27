@@ -20,7 +20,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "run-p build:types build:src",
+    "build": "run-p analyze build:types build:src",
     "build:src": "vite build",
     "build:types": "npx tsc",
     "preview": "vite preview",

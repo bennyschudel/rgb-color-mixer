@@ -1,6 +1,5 @@
 import { css, html, LitElement } from 'lit';
 import { createRef } from 'lit/directives/ref.js';
-import { cache } from 'lit/directives/cache.js';
 
 import { default as rgbaConverter } from 'color-rgba';
 
