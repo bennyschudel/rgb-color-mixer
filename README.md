@@ -51,7 +51,7 @@ npm install rgb-color-mixer
 Parses the text using the [color-rgba](https://github.com/colorjs/color-rgba#readme) library and sets the color.
 
 ```html
-  <rgb-color-mixer id="mixer" initialValue="chocolate"></rgb-color-mixer>
+  <rgb-color-mixer id="mixer"></rgb-color-mixer>
 
   <script type="module">
     import 'rgb-color-mixer';
@@ -68,8 +68,8 @@ There are a few attributes that could be set to customise the look and feel of t
 
 attribute-name         | type    | default value                   | description
 --------------         | ----    | -------------                   | -----------
-`channels`             | String  | rgbhsl (r|g|b|h|s|l)            | The channels to be shown. Can be any combination of 'rgbhsl'.
-`displayFormat`        | String  | hex (hex|rgb)                   | The color format that is displayed and emitted
+`channels`             | String  | rgbhsl (r\|g\|b\|h\|s\|l)       | The channels to be shown. Can be any combination of 'rgbhsl'.
+`displayFormat`        | String  | hex (hex\|rgb)                  | The color format that is displayed and emitted
 `initialValue`         | String  |                                 | The initial RGB color value
 `value`                | String  |                                 | The current RGB color value (readonly)
 
@@ -97,7 +97,7 @@ It sets the color using RGB normalized values.
 
 ## Examples
 
-There are examples provided in the `examples/` folder.
+There are examples provided in the [examples](./examples) folder.
 
 ## License
 
