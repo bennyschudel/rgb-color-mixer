@@ -55,7 +55,11 @@ export class RgbColorMixerUiInput extends LitElement {
   // --- private methods ---
 
   #emitValueUpdate(value) {
-    const event = createCustomEvent('update:value', { value }, { bubbles: false });
+    const event = createCustomEvent(
+      'update:value',
+      { value },
+      { bubbles: false },
+    );
 
     this.dispatchEvent(event);
   }
@@ -69,7 +73,21 @@ export class RgbColorMixerUiInput extends LitElement {
   // --- methods ---
 
   setValue(value) {
-    this.#emitValueUpdate(value);
+    let _value = value;
+
+    if (this.type === 'number') {
+      if (this.step != null) {
+        _value = Math.round(_value / this.step) * this.step;
+      }
+      if (this.max != null) {
+        _value = Math.min(_value, this.max);
+      }
+      if (this.min != null) {
+        _value = Math.max(_value, this.min);
+      }
+    }
+
+    this.#emitValueUpdate(_value);
   }
 
   clear() {
@@ -92,14 +110,11 @@ export class RgbColorMixerUiInput extends LitElement {
     }
   }
 
-    // --- render
+  // --- render
 
   render() {
     return html`
-      <div
-        ${ref(this.rootEl)}
-        class="body"
-      >
+      <div ${ref(this.rootEl)} class="body">
         <input
           ${ref(this.inputEl)}
           part="input"
@@ -118,7 +133,7 @@ export class RgbColorMixerUiInput extends LitElement {
   // --- styles ---
 
   static styles = css`
-   .body {
+    .body {
       --border-color: transparent;
       --border-width: 1px;
 
@@ -148,7 +163,7 @@ export class RgbColorMixerUiInput extends LitElement {
         -webkit-appearance: none;
       }
 
-      &[type="number"] {
+      &[type='number'] {
         -moz-appearance: textfield;
 
         text-align: right;

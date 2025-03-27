@@ -506,6 +506,7 @@ export class RgbColorMixer extends LitElement {
   static styles = css`
     :host {
       box-sizing: border-box;
+      display: inline-flex;
 
       *,
       *::after,
