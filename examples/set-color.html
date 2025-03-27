@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <title>Set color</title>
+    <link rel="stylesheet" href="./index.css">
+  </head>
+  <body>
+    <rgb-color-mixer id="mixer"></rgb-color-mixer>
+
+    <script type="module">
+      import '../src/main.js';
+
+      const mixerEl = document.getElementById('mixer');
+
+      mixerEl.setColor('tomato');
+    </script>
+  </body>
+</html>

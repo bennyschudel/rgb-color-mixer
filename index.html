@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <title>&lt;rgb-color-mixer&gt;</title>
+    <link rel="stylesheet" href="./index.css">
+  </head>
+  <body>
+    <div id="swatch"></div>
+
+    <rgb-color-mixer id="mixer" initialValue="chocolate"></rgb-color-mixer>
+
+    <script type="module">
+      import './src/main.js';
+
+      const mixerEl = document.getElementById('mixer');
+      const swatchEl = document.getElementById('swatch');
+
+      mixerEl.addEventListener('update:value', (event) => {
+        swatchEl.style.backgroundColor = event.detail.value;
+      });
+    </script>
+  </body>
+</html>
