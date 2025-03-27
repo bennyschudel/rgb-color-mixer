@@ -45,7 +45,7 @@ export class RgbColorSliderItem extends LitElement {
 
   static styles = css`
     :host {
-      --label-width: 2rem;
+      --label-width: 32px;
       --background-color: light-dark(#c0c0c0, #202020);
       --color: light-dark(#202020, #f0f0f0);
 
@@ -63,7 +63,7 @@ export class RgbColorSliderItem extends LitElement {
     .body {
       align-items: stretch;
       display: flex;
-      gap: 0.5rem;
+      gap: 8px;
     }
 
     .slider {
@@ -79,21 +79,25 @@ export class RgbColorSliderItem extends LitElement {
     .label {
       align-items: center;
       background-color: var(--background-color);
-      border-radius: 0.25rem 0 0 0.25rem;
+      border-radius: 4px 0 0 4px;
       color: var(--color);
       display: flex;
       font-family: sans-serif;
-      font-size: 0.8rem;
+      font-size: 12px;
       justify-content: center;
       user-select: none;
       width: var(--label-width);
+      font-weight: 600;
     }
 
     .value {
-      border-radius:  0 0.25rem 0.25rem 0;
+      align-items: stretch;
       background-color: var(--background-color);
+      border-radius:  0 4px 4px 0;
       color: var(--color);
+      display: flex;
       font-variant-numeric: tabular-nums;
+      justify-content: stretch;
       width: 56px;
     }
 `;

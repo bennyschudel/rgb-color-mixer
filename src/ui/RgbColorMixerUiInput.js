@@ -133,16 +133,22 @@ export class RgbColorMixerUiInput extends LitElement {
   // --- styles ---
 
   static styles = css`
-    .body {
+    :host {
       --border-color: transparent;
       --border-width: 1px;
+      --height: 32px;
 
+      height: var(--height);
+      display: inline-flex;
+    }
+
+    .body {
       align-items: stretch;
-      border-radius: 0 0.25rem 0.25rem 0;
+      border-radius: 0 4px 4px 0;
       border: var(--border-width) solid var(--border-color);
       box-sizing: border-box;
       display: flex;
-      height: 2rem;
+      flex: 1 0 auto;
 
       *,
       *::after,
@@ -152,9 +158,9 @@ export class RgbColorMixerUiInput extends LitElement {
     }
 
     input {
-      padding: 0.25rem;
+      padding: 4px;
       border: none;
-      border-radius: 0.25rem;
+      border-radius: 4px;
       flex: 1 1 auto;
       width: 100%;
 

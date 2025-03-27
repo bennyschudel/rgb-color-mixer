@@ -35,7 +35,7 @@ export class RgbColorMixerUiIcon extends LitElement {
 
   static styles = css`
     :host {
-      --size: 1rem;
+      --size: 16px;
       --color: light-dark(black, white);
 
       display: inline-flex;

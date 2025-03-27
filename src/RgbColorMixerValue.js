@@ -134,18 +134,18 @@ export class RgbColorMixerValue extends LitElement {
     .body {
       align-items: stretch;
       background-color: var(--background-color);
-      border-radius: 0.5rem;
+      border-radius: 8px;
       display: inline-flex;
       font-family: sans-serif;
-      gap: 0.25rem;
-      padding: 0.25rem;
+      gap: 4px;
+      padding: 4px;
     }
 
     .swatch {
       --size: 26px;
 
       background-color: var(--color);
-      border-radius: 0.25rem;
+      border-radius: 4px;
       box-shadow:
         0 0 0 1px black,
         0 0 0 2px white;
@@ -161,7 +161,7 @@ export class RgbColorMixerValue extends LitElement {
     .input {
       &::part(input) {
         font-family: Monaco, monospace;
-        width: 10rem;
+        width: 160px;
         text-align: center;
       }
     }

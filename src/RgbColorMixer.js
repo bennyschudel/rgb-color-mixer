@@ -518,19 +518,21 @@ export class RgbColorMixer extends LitElement {
       align-items: center;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 16px;
     }
 
     .channels {
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
+      gap: 4px;
     }
 
     .value {
+      flex: 1 0 auto;
+
       &::part(input) {
-        border-radius: 0 0.25rem 0.25rem 0;
+        border-radius: 0 4px 4px 0;
       }
     }
   `;

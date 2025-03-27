@@ -290,7 +290,7 @@ export class RgbColorSlider extends LitElement {
       &:focus {
         outline: 2px solid inherit;
         outline-offset: 1px;
-        border-radius: 0.25rem;
+        border-radius: 4px;
       }
     }
 
@@ -319,7 +319,7 @@ export class RgbColorSlider extends LitElement {
       --size: calc(var(--height) - 10px);
 
       background-color: var(--color);
-      border-radius: 0.25rem;
+      border-radius: 4px;
       box-shadow:
         0 0 0 1px black,
         0 0 0 2px white;
