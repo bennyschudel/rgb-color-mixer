@@ -24,7 +24,7 @@
     "build:src": "vite build",
     "build:types": "npx tsc",
     "preview": "vite preview",
-    "analyze": "cem analyze --litelement",
+    "analyze": "cem analyze --litelement --outdir dist",
     "e2e": "npx playwright test",
     "e2e:report": "npx playwright show-report",
     "e2e:update": "npx playwright test --update-snapshots"
@@ -45,5 +45,5 @@
     "vite": "^6.2.3",
     "vite-plugin-bundlesize": "^0.1.0"
   },
-  "customElements": "custom-elements.json"
+  "customElements": "./dist/custom-elements.json"
 }
