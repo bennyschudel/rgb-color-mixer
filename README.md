@@ -69,7 +69,7 @@ There are a few attributes that could be set to customise the look and feel of t
 attribute-name         | type    | default value                   | description
 --------------         | ----    | -------------                   | -----------
 `channels`             | String  | rgbhsl (r\|g\|b\|h\|s\|l)       | The channels to be shown. Can be any combination of 'rgbhsl'.
-`displayFormat`        | String  | hex (hex\|rgb)                  | The color format that is displayed and emitted
+`format`               | String  | hex (hex\|rgb)                  | The color format that is displayed and emitted
 `initialValue`         | String  |                                 | The initial RGB color value
 `value`                | String  |                                 | The current RGB color value (readonly)
 

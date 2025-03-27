@@ -18,7 +18,7 @@ import hsl from 'color-space/hsl.js';
  * @extends {LitElement}
  *
  * @property {string} [channels='rgbhsl'] - The channels to be shown.
- * @property {('hex'|'rgb'))} [displayFormat='hex'] - The current color display format, which can be 'hex', or 'rgb'.
+ * @property {('hex'|'rgb'))} [format='hex'] - The current color format, which can be 'hex', or 'rgb'.
  */
 export class RgbColorMixer extends LitElement {
   rootEl = createRef();
@@ -27,7 +27,7 @@ export class RgbColorMixer extends LitElement {
     _rgb: { state: true },
     // ---
     channels: { type: String },
-    displayFormat: { type: String },
+    format: { type: String },
     initialValue: { type: String },
     value: { type: String, reflect: true },
   };
@@ -38,7 +38,7 @@ export class RgbColorMixer extends LitElement {
     this._rgb = [0, 0, 0];
 
     /** @type {'hex' | 'rgb'} */
-    this.displayFormat = 'rgb';
+    this.format = 'rgb';
 
     this.channels = 'rgbhsl';
 
@@ -143,7 +143,7 @@ export class RgbColorMixer extends LitElement {
    * @returns {string} The CSS color string in the specified display format.
    */
   get colorCss() {
-    return rgbToCss(this._rgb, this.displayFormat);
+    return rgbToCss(this._rgb, this.format);
   }
 
   // --- private methods ---
