@@ -19,6 +19,8 @@ import { normalizeRgb, rgbToCss } from './utils';
  *
  * @property {string} [channels='rgbhsl'] - The channels to be shown.
  * @property {('hex'|'rgb'))} [format='hex'] - The current color format, which can be 'hex', or 'rgb'.
+ * @property {string} [initialValue] - The initial color value in a parsable format.
+ * @property {string} [value] - The current color value in the specified format.
  */
 export class RgbColorMixer extends LitElement {
   rootEl = createRef();
@@ -39,12 +41,15 @@ export class RgbColorMixer extends LitElement {
   constructor() {
     super();
 
+    this._colorActive = false;
+    this._colorEnd = '#ffffff';
+    this._colorStart = '#000000';
     this._rgb = [0, 0, 0];
+
+    this.channels = 'rgbhsl';
 
     /** @type {'hex' | 'rgb'} */
     this.format = 'rgb';
-
-    this.channels = 'rgbhsl';
 
     this.initialValue = undefined;
     this.value = undefined;
@@ -317,6 +322,10 @@ export class RgbColorMixer extends LitElement {
   }
 
   // --- lifecycle ---
+
+  connectedCallback() {
+    super.connectedCallback();
+  }
 
   willUpdate(props) {
     if (props.has('initialValue')) {
