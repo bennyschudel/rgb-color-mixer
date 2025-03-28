@@ -134,27 +134,23 @@ export class RgbColorMixerUiInput extends LitElement {
 
   static styles = css`
     :host {
-      --border-color: transparent;
-      --border-width: 1px;
-      --height: 32px;
+      --height: 24px;
 
       height: var(--height);
       display: inline-flex;
-    }
-
-    .body {
-      align-items: stretch;
-      border-radius: 0 4px 4px 0;
-      border: var(--border-width) solid var(--border-color);
       box-sizing: border-box;
-      display: flex;
-      flex: 1 1 auto;
 
       *,
       *::after,
       *::before {
         box-sizing: inherit;
       }
+    }
+
+    .body {
+      align-items: stretch;
+      display: flex;
+      flex: 1 1 auto;
     }
 
     input {

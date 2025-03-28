@@ -142,10 +142,10 @@ export class RgbColorMixerValue extends LitElement {
     }
 
     .swatch {
-      --size: 26px;
+      --size: 20px;
 
       background-color: var(--color);
-      border-radius: 4px;
+      border-radius: 2px;
       box-shadow:
         0 0 0 1px black,
         0 0 0 2px white;

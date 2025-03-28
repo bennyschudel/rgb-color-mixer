@@ -545,7 +545,7 @@ export class RgbColorMixer extends LitElement {
     return html`
       <div ${ref(this.rootEl)} class="mixer">
         <rgb-color-mixer-value
-          class="value"
+          class="input-value"
           value=${this.colorCss}
           @update:value=${this.#handleColorInputChange}
         ></rgb-color-mixer-value>
@@ -585,10 +585,6 @@ export class RgbColorMixer extends LitElement {
       }
     }
 
-    .value {
-      margin: 0 auto;
-    }
-
     .mixer {
       align-items: stretch;
       background-color: light-dark(#f0f0f0, #202020);
@@ -607,11 +603,18 @@ export class RgbColorMixer extends LitElement {
     }
 
     .value {
+      --height: 30px;
+
       flex: 1 1 auto;
+      margin: 1px;
 
       &::part(input) {
         border-radius: 0 4px 4px 0;
       }
+    }
+
+    .input-value {
+      margin: 0 auto;
     }
   `;
 }
