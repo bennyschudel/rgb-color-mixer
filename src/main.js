@@ -5,8 +5,8 @@ import { RgbColorMixerUiInput } from './ui/RgbColorMixerUiInput.js';
 import { RgbColorPickerUiSeparator } from './ui/RgbColorMixerUiSeparator.js';
 import { RgbColorMixerUiToolTip } from './ui/RgbColorMixerUiToolTip.js';
 
-import { RgbColorMixerGradient } from './RgbColorMixerGradient.js';
-import { RgbColorMixerGradientStop } from './RgbColorMixerGradientStop.js';
+import { RgbColorMixerBlender } from './RgbColorMixerBlender.js';
+import { RgbColorMixerBlenderStop } from './RgbColorMixerBlenderStop.js';
 import { RgbColorMixerValue } from './RgbColorMixerValue.js';
 
 import { RgbColorSlider } from './RgbColorSlider.js';
@@ -27,8 +27,8 @@ window.customElements.define('rgb-color-mixer-ui-input', RgbColorMixerUiInput);
 window.customElements.define('rgb-color-mixer-ui-separator', RgbColorPickerUiSeparator);
 window.customElements.define('rgb-color-mixer-ui-tool-tip', RgbColorMixerUiToolTip);
 
-window.customElements.define('rgb-color-mixer-gradient', RgbColorMixerGradient);
-window.customElements.define('rgb-color-mixer-gradient-stop', RgbColorMixerGradientStop);
+window.customElements.define('rgb-color-mixer-blender', RgbColorMixerBlender);
+window.customElements.define('rgb-color-mixer-blender-stop', RgbColorMixerBlenderStop);
 window.customElements.define('rgb-color-mixer-value', RgbColorMixerValue);
 
 window.customElements.define('rgb-color-slider', RgbColorSlider);

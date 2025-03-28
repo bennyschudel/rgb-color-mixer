@@ -12,8 +12,8 @@ import { clamp } from './utils';
  * @extends {LitElement}
  *
  * @property {Function} colorFunc - Function to generate color based on value.
- * @property {Array<string>} colorStops - Array of color stops for the gradient.
- * @property {string} gradientMode - Mode of the color gradient.
+ * @property {Array<string>} colorStops - Array of color stops for the blender.
+ * @property {string} gradientMode - Mode of the color blender.
  * @property {number} height - Height of the slider.
  * @property {number} max - Maximum value of the slider.
  * @property {number} min - Minimum value of the slider.

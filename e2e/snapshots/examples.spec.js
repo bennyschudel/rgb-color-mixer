@@ -4,6 +4,7 @@ import { test, expect } from '@playwright/test';
 const examples = [
   'default',
   'hsl-only',
+  'no-blender',
   'rgb-only',
   'set-color',
 ];

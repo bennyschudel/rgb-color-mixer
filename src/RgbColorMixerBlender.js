@@ -16,13 +16,13 @@ import { createCustomEvent } from './helpers';
  * @extends {LitElement}
  *
  * @property {(null|'start'|'end')} colorActive - Indicates the currently active color stop.
- * @property {string} colorStart - The starting color for the gradient.
- * @property {string} colorEnd - The ending color for the gradient.
+ * @property {string} colorStart - The starting color for the blender.
+ * @property {string} colorEnd - The ending color for the blender.
  *
  * @fires update:value - Dispatched when the slider value changes, providing the mixed color.
  * @fires update:coloractive - Dispatched when the active color stop changes.
  */
-export class RgbColorMixerGradient extends LitElement {
+export class RgbColorMixerBlender extends LitElement {
   rootEl = createRef();
 
   static properties = {
@@ -123,11 +123,11 @@ export class RgbColorMixerGradient extends LitElement {
   render() {
     return html`
       <div ${ref(this.rootEl)} class="body">
-        <rgb-color-mixer-gradient-stop
+        <rgb-color-mixer-blender-stop
           ?active="${this.colorActive === 'start'}"
           value=${this.colorStart}
           @update:active=${this.#handleActiveUpdateStart}
-        ></rgb-color-mixer-gradient-stop>
+        ></rgb-color-mixer-blender-stop>
         <rgb-color-slider
           .colorFunc=${this.#colorFunc.bind(this)}
           .colorStops=${this.#colorStops}
@@ -137,11 +137,11 @@ export class RgbColorMixerGradient extends LitElement {
           value=${this._sliderValue}
           @update:value=${this.#handleSliderValueUpdate}
         ></rgb-color-slider>
-        <rgb-color-mixer-gradient-stop
+        <rgb-color-mixer-blender-stop
           ?active="${this.colorActive === 'end'}"
           value=${this.colorEnd}
           @update:active=${this.#handleActiveUpdateEnd}
-        ></rgb-color-mixer-gradient-stop>
+        ></rgb-color-mixer-blender-stop>
       </div>
     `;
   }
