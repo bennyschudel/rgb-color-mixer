@@ -83,7 +83,7 @@ export class RgbColorSliderItem extends LitElement {
       color: var(--color);
       display: flex;
       font-family: sans-serif;
-      font-size: 12px;
+      font-size: 13px;
       justify-content: center;
       user-select: none;
       width: var(--label-width);

@@ -504,8 +504,11 @@ export class RgbColorMixer extends LitElement {
 
   static styles = css`
     :host {
+      --padding: 16px;
+
       box-sizing: border-box;
       display: inline-flex;
+      padding: var(--padding);
 
       *,
       *::after,
@@ -529,7 +532,7 @@ export class RgbColorMixer extends LitElement {
     }
 
     .value {
-      flex: 1 0 auto;
+      flex: 1 1 auto;
 
       &::part(input) {
         border-radius: 0 4px 4px 0;

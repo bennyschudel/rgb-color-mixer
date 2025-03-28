@@ -148,7 +148,7 @@ export class RgbColorMixerUiInput extends LitElement {
       border: var(--border-width) solid var(--border-color);
       box-sizing: border-box;
       display: flex;
-      flex: 1 0 auto;
+      flex: 1 1 auto;
 
       *,
       *::after,
@@ -163,6 +163,7 @@ export class RgbColorMixerUiInput extends LitElement {
       border-radius: 4px;
       flex: 1 1 auto;
       width: 100%;
+      font-size: 13px;
 
       &::-webkit-outer-spin-button,
       &::-webkit-inner-spin-button {
@@ -172,6 +173,7 @@ export class RgbColorMixerUiInput extends LitElement {
       &[type='number'] {
         -moz-appearance: textfield;
 
+        font-variant-numeric: tabular-nums;
         text-align: right;
       }
     }
