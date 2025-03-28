@@ -20,11 +20,12 @@ import { normalizeRgb, rgbToCss } from './utils';
  * @property {string} [channels='rgbhsl'] - The channels to be shown.
  * @property {('hex'|'rgb'))} [format='hex'] - The current color format, which can be 'hex', or 'rgb'.
  * @property {string} [initialValue] - The initial color value in a parsable format.
+ * @property {boolean} [noBlender=false] - Hide the spectral blender slider.
  * @property {string} [value] - The current color value in the specified format.
  */
 export class RgbColorMixer extends LitElement {
   rootEl = createRef();
-  gradientEl = createRef();
+  blenderEl = createRef();
 
   static properties = {
     _colorActive: { state: true },
@@ -35,6 +36,7 @@ export class RgbColorMixer extends LitElement {
     channels: { type: String },
     format: { type: String },
     initialValue: { type: String },
+    noBlender: { type: Boolean },
     value: { type: String, reflect: true },
   };
 
@@ -52,6 +54,7 @@ export class RgbColorMixer extends LitElement {
     this.format = 'rgb';
 
     this.initialValue = undefined;
+    this.noBlender = false;
     this.value = undefined;
   }
 
@@ -266,13 +269,13 @@ export class RgbColorMixer extends LitElement {
     this.setColor(value);
   }
 
-  #handleGradientValueUpdate(event) {
+  #handleBlenderValueUpdate(event) {
     const value = event.detail.value;
 
     this.setColor(value);
   }
 
-  #handleGradientColorActiveUpdate(event) {
+  #handleBlenderColorActiveUpdate(event) {
     const value = event.detail.value;
 
     this._colorActive = value;
@@ -333,7 +336,7 @@ export class RgbColorMixer extends LitElement {
 
       this._colorStart = this.#colorHex;
 
-      // NOTE: caclulate the gradient end color by shifting the hue angle by 90 degrees
+      // NOTE: caclulate the blender end color by shifting the hue angle by 90 degrees
 
       const hsl = rgbSpace.hsl(rgbaConverter(this.#colorHex));
       hsl[0] = (hsl[0] + 90) % 360;
@@ -547,17 +550,20 @@ export class RgbColorMixer extends LitElement {
           @update:value=${this.#handleColorInputChange}
         ></rgb-color-mixer-value>
         <rgb-color-mixer-ui-separator></rgb-color-mixer-ui-separator>
-        <div class="gradient">
-          <rgb-color-mixer-gradient
-            ${ref(this.gradientEl)}
-            colorActive=${this._colorActive}
-            colorEnd=${this._colorEnd}
-            colorStart=${this._colorStart}
-            @update:coloractive=${this.#handleGradientColorActiveUpdate}
-            @update:value=${this.#handleGradientValueUpdate}
-          ></rgb-color-mixer-gradient>
-        </div>
-        <rgb-color-mixer-ui-separator></rgb-color-mixer-ui-separator>
+        ${!this.noBlender
+          ? html` <!-- Blender Slider -->
+              <div class="blender">
+                <rgb-color-mixer-blender
+                  ${ref(this.blenderEl)}
+                  colorActive=${this._colorActive}
+                  colorEnd=${this._colorEnd}
+                  colorStart=${this._colorStart}
+                  @update:coloractive=${this.#handleBlenderColorActiveUpdate}
+                  @update:value=${this.#handleBlenderValueUpdate}
+                ></rgb-color-mixer-blender>
+              </div>
+              <rgb-color-mixer-ui-separator></rgb-color-mixer-ui-separator>`
+          : html``}
         <div class="channels">${sliderTemplates}</div>
       </div>
     `;
