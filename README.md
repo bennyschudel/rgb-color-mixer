@@ -74,6 +74,7 @@ attribute-name         | type    | default value                   | description
 `channels`             | String  | rgbhsl (r\|g\|b\|h\|s\|l)       | The channels to be shown. Can be any combination of 'rgbhsl'.
 `format`               | String  | hex (hex\|rgb)                  | The color format that is displayed and emitted
 `initialValue`         | String  |                                 | The initial RGB color value
+`noBlender`            | Boolean | false                           | Hide the color blender slider.
 `value`                | String  |                                 | The current RGB color value (readonly)
 
 ## Methods
