@@ -3,7 +3,7 @@
   "description": "A RGB Color mixer implemented as a web component",
   "license": "MIT",
   "author": "rgb-color-mixer",
-  "version": "0.7.0-alpha4",
+  "version": "0.7.0-alpha5",
   "type": "module",
   "types": "dist/types/main.d.ts",
   "exports": {
@@ -34,7 +34,8 @@
     "color-space": "^2.3.1"
   },
   "peerDependencies": {
-    "lit": "^3.2.1"
+    "lit": "^3.2.1",
+    "spectral.js": "^2.0.2"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.10.4",

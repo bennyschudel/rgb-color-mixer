@@ -1,3 +1,7 @@
+import { default as rgbaConverter } from 'color-rgba';
+
+import { normalizeRgb } from './utils';
+
 /**
  * Creates a custom event with the specified name, detail, and options.
  *
@@ -22,4 +26,27 @@ export function createCustomEvent(
     detail: window.structuredClone(detail),
     ...options,
   });
+}
+
+/**
+ * Determines whether black or white text would be more readable on a given background color.
+ *
+ * @param {string} text - The input color in any valid CSS color format (e.g., hex, rgb, rgba, etc.).
+ * @returns {('black'|'white')} Returns 'black' if black text is more readable, or 'white' if white text is more readable.
+ *                              Defaults to 'black' if the input color cannot be parsed.
+ */
+export function blackOrWhite(text) {
+  const rgb = rgbaConverter(text);
+
+  if (!rgb) {
+    console.warn('Cound not parse text to color. Fallback to black.');
+
+    return 'black';
+  }
+
+  const [r, g, b] = normalizeRgb(rgb);  // omit alpha channel
+
+  const l = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+
+  return l > 0.179 ? 'black' : 'white';
 }

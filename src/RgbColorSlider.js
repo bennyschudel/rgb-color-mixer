@@ -62,6 +62,7 @@ export class RgbColorSlider extends LitElement {
     this.height = 32;
 
     this.colorStops = [];
+    this.colorFunc = () => 'transparent';
 
     this.stepMultiplier = 1;
     this.stepMultiplierFast = 10;

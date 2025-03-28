@@ -41,10 +41,10 @@ export class RgbColorMixerValue extends LitElement {
 
     const { value } = event.detail;
 
-    this.#emitValueChange(value);
+    this.#emitValueupdate(value);
   }
 
-  #emitValueChange(value) {
+  #emitValueupdate(value) {
     const event = createCustomEvent(
       'update:value',
       { value },
