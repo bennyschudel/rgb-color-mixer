@@ -1,13 +1,13 @@
 # \<rgb-color-mixer>
 
-This is a RGB Color Mixer webcomponent built using lit.
+This is a RGB Color Mixer webcomponent built using lit and spectral.js.
 
 ## Installation
 
-1. Install lit package
+1. Install lit and spectral.js packages
 
 ```bash
-npm install lit
+npm install lit spectral.js
 ```
 
 2. Install the RGB Color Mixer package
@@ -21,6 +21,9 @@ npm install rgb-color-mixer
 ### Minimal example
 
 ```html
+  <script type="module" src="https://esm.sh/lit" />
+  <script type="module" src="https://esm.sh/spectral.js" />
+
   <rgb-color-mixer initialValue="hotpink"></rgb-color-mixer>
 
   <script type="module">
