@@ -25,6 +25,7 @@ export default defineConfig(({ command, mode }) => {
         external: [
           'lit',
           /^lit-html\/.*/,
+          'spectral.js',
         ],
       },
       chunkSizeWarningLimit: 200,

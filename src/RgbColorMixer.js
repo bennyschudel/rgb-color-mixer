@@ -1,13 +1,13 @@
 import { css, html, LitElement } from 'lit';
-import { createRef } from 'lit/directives/ref.js';
+import { ref, createRef } from 'lit/directives/ref.js';
 
 import { default as rgbaConverter } from 'color-rgba';
 
+import rgbSpace from 'color-space/rgb.js';
+import hslSpace from 'color-space/hsl.js';
+
 import { createCustomEvent } from './helpers';
 import { normalizeRgb, rgbToCss } from './utils';
-
-import rgb from 'color-space/rgb.js';
-import hsl from 'color-space/hsl.js';
 
 /**
  * A custom element for an RGB and HSL color mixer.
@@ -19,11 +19,17 @@ import hsl from 'color-space/hsl.js';
  *
  * @property {string} [channels='rgbhsl'] - The channels to be shown.
  * @property {('hex'|'rgb'))} [format='hex'] - The current color format, which can be 'hex', or 'rgb'.
+ * @property {string} [initialValue] - The initial color value in a parsable format.
+ * @property {string} [value] - The current color value in the specified format.
  */
 export class RgbColorMixer extends LitElement {
   rootEl = createRef();
+  gradientEl = createRef();
 
   static properties = {
+    _colorActive: { state: true },
+    _colorEnd: { state: true },
+    _colorStart: { state: true },
     _rgb: { state: true },
     // ---
     channels: { type: String },
@@ -35,12 +41,15 @@ export class RgbColorMixer extends LitElement {
   constructor() {
     super();
 
+    this._colorActive = false;
+    this._colorEnd = '#ffffff';
+    this._colorStart = '#000000';
     this._rgb = [0, 0, 0];
+
+    this.channels = 'rgbhsl';
 
     /** @type {'hex' | 'rgb'} */
     this.format = 'rgb';
-
-    this.channels = 'rgbhsl';
 
     this.initialValue = undefined;
     this.value = undefined;
@@ -61,7 +70,7 @@ export class RgbColorMixer extends LitElement {
   }
 
   get #hslOriginal() {
-    return rgb.hsl(this.#rgbOriginal);
+    return rgbSpace.hsl(this.#rgbOriginal);
   }
 
   get #hslOriginalShort() {
@@ -146,6 +155,12 @@ export class RgbColorMixer extends LitElement {
     return rgbToCss(this._rgb, this.format);
   }
 
+  // --- private getters ---
+
+  get #colorHex() {
+    return rgbToCss(this._rgb, 'hex');
+  }
+
   // --- private methods ---
 
   #emitUpdateValue(value) {
@@ -183,7 +198,7 @@ export class RgbColorMixer extends LitElement {
     const h = event.detail.value;
     const [_, s, l] = this.#hslOriginal;
 
-    const rgb = hsl.rgb([h, s, l]);
+    const rgb = hslSpace.rgb([h, s, l]);
     const rgbNormalized = normalizeRgb(rgb);
 
     this.setRgbNormalized(rgbNormalized);
@@ -193,7 +208,7 @@ export class RgbColorMixer extends LitElement {
     const s = event.detail.value;
     const [h, _, l] = this.#hslOriginal;
 
-    const rgb = hsl.rgb([h, s, l]);
+    const rgb = hslSpace.rgb([h, s, l]);
     const rgbNormalized = normalizeRgb(rgb);
 
     this.setRgbNormalized(rgbNormalized);
@@ -203,7 +218,7 @@ export class RgbColorMixer extends LitElement {
     const l = event.detail.value;
     const [h, s, _] = this.#hslOriginal;
 
-    const rgb = hsl.rgb([h, s, l]);
+    const rgb = hslSpace.rgb([h, s, l]);
     const rgbNormalized = normalizeRgb(rgb);
 
     this.setRgbNormalized(rgbNormalized);
@@ -251,6 +266,18 @@ export class RgbColorMixer extends LitElement {
     this.setColor(value);
   }
 
+  #handleGradientValueUpdate(event) {
+    const value = event.detail.value;
+
+    this.setColor(value);
+  }
+
+  #handleGradientColorActiveUpdate(event) {
+    const value = event.detail.value;
+
+    this._colorActive = value;
+  }
+
   // --- methods ---
 
   /**
@@ -296,10 +323,33 @@ export class RgbColorMixer extends LitElement {
 
   // --- lifecycle ---
 
+  connectedCallback() {
+    super.connectedCallback();
+  }
+
   willUpdate(props) {
     if (props.has('initialValue')) {
       this.setColor(this.initialValue);
+
+      this._colorStart = this.#colorHex;
+
+      // NOTE: caclulate the gradient end color by shifting the hue angle by 90 degrees
+
+      const hsl = rgbSpace.hsl(rgbaConverter(this.#colorHex));
+      hsl[0] = (hsl[0] + 90) % 360;
+      const rgb = hslSpace.rgb(hsl);
+
+      this._colorEnd = rgbToCss(normalizeRgb(rgb), 'hex');
     }
+
+    if (props.has('_rgb') || props.has('_colorActive')) {
+      if (this._colorActive === 'start') {
+        this._colorStart = this.#colorHex;
+      } else if (this._colorActive === 'end') {
+        this._colorEnd = this.#colorHex;
+      }
+    }
+
     if (props.has('_rgb')) {
       this.value = this.colorCss;
       this.#emitUpdateValue(this.colorCss);
@@ -484,17 +534,30 @@ export class RgbColorMixer extends LitElement {
 
       if (!template) {
         throw new Error(`Unknown slider mode: ${c}`);
-      };
+      }
 
       sliderTemplates.push(template);
     }
 
     return html`
-      <div class="mixer">
+      <div ${ref(this.rootEl)} class="mixer">
         <rgb-color-mixer-value
+          class="value"
           value=${this.colorCss}
           @update:value=${this.#handleColorInputChange}
         ></rgb-color-mixer-value>
+        <rgb-color-mixer-ui-separator></rgb-color-mixer-ui-separator>
+        <div class="gradient">
+          <rgb-color-mixer-gradient
+            ${ref(this.gradientEl)}
+            colorActive=${this._colorActive}
+            colorEnd=${this._colorEnd}
+            colorStart=${this._colorStart}
+            @update:coloractive=${this.#handleGradientColorActiveUpdate}
+            @update:value=${this.#handleGradientValueUpdate}
+          ></rgb-color-mixer-gradient>
+        </div>
+        <rgb-color-mixer-ui-separator></rgb-color-mixer-ui-separator>
         <div class="channels">${sliderTemplates}</div>
       </div>
     `;
@@ -508,7 +571,6 @@ export class RgbColorMixer extends LitElement {
 
       box-sizing: border-box;
       display: inline-flex;
-      padding: var(--padding);
 
       *,
       *::after,
@@ -517,11 +579,18 @@ export class RgbColorMixer extends LitElement {
       }
     }
 
+    .value {
+      margin: 0 auto;
+    }
+
     .mixer {
-      align-items: center;
+      align-items: stretch;
+      background-color: light-dark(#f0f0f0, #202020);
+      border-radius: 4px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 4px;
+      padding: var(--padding);
     }
 
     .channels {

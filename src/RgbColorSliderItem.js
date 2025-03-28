@@ -46,7 +46,7 @@ export class RgbColorSliderItem extends LitElement {
   static styles = css`
     :host {
       --label-width: 32px;
-      --background-color: light-dark(#c0c0c0, #202020);
+      --background-color: light-dark(#c0c0c0, #303030);
       --color: light-dark(#202020, #f0f0f0);
 
       box-sizing: border-box;
