@@ -18,6 +18,8 @@ import { copyToClipboard } from './utils';
  * @extends {LitElement}
  *
  * @property {boolean} [disabled=false] - Indicates if the input is disabled.
+ * @property {boolean} [noCopy=false] - Hide the copy action.
+ * @property {boolean} [noPicker=false] - Hide the color picker.
  * @property {string} value - The current value of the color mixer.
  *
  * @fires ColorMixerValue#update:value - Fired when the value is updated.
@@ -29,6 +31,8 @@ export class RgbColorMixerValue extends LitElement {
 
   static properties = {
     disabled: { type: Boolean },
+    noCopy: { type: Boolean },
+    noPicker: { type: Boolean },
     value: { type: String, reflect: true },
   };
 
@@ -38,6 +42,8 @@ export class RgbColorMixerValue extends LitElement {
     super();
 
     this.disabled = false;
+    this.noCopy = false;
+    this.noPicker = false;
   }
 
   // --- private methods ---
@@ -126,48 +132,52 @@ export class RgbColorMixerValue extends LitElement {
             value=${this.value}
             @update:value=${this.#handleValueUpdate}
           ></rgb-color-mixer-ui-input>
-          <rgb-color-mixer-ui-icon-button
-            ${ref(this.copyEl)}
-            ?disabled=${this.disabled}
-            feedback
-            @click=${this.copyToClipboard}
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"
-              />
-              <path
-                d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"
-              />
-            </svg>
-          </rgb-color-mixer-ui-icon-button>
-        ${
-          this.#hasEyeDropperSupport
-            ? html`
-          <rgb-color-mixer-ui-icon-button @click=${this.openEyeDropper}>
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M11 7l6 6" />
-              <path
-                d="M4 16l11.7 -11.7a1 1 0 0 1 1.4 0l2.6 2.6a1 1 0 0 1 0 1.4l-11.7 11.7h-4v-4z"
-              />
-            </svg>
-          </rgb-color-mixer-ui-icon-button>`
-            : html``
-        }
+          ${!this.noCopy
+            ? html` <!-- Copy -->
+                <rgb-color-mixer-ui-icon-button
+                  ${ref(this.copyEl)}
+                  ?disabled=${this.disabled}
+                  feedback
+                  @click=${this.copyToClipboard}
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"
+                    />
+                    <path
+                      d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"
+                    />
+                  </svg>
+                </rgb-color-mixer-ui-icon-button>`
+            : html``}
+          ${!this.noPicker && this.#hasEyeDropperSupport
+            ? html` <!-- Eye Dropper -->
+                <rgb-color-mixer-ui-icon-button
+                  ?disabled=${this.disabled}
+                  @click=${this.openEyeDropper}
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M11 7l6 6" />
+                    <path
+                      d="M4 16l11.7 -11.7a1 1 0 0 1 1.4 0l2.6 2.6a1 1 0 0 1 0 1.4l-11.7 11.7h-4v-4z"
+                    />
+                  </svg>
+                </rgb-color-mixer-ui-icon-button>`
+            : html``}
         </rgb-color-mixer-ui-field>
       </div>
     `;
