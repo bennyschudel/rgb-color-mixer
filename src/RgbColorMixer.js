@@ -20,7 +20,10 @@ import { normalizeRgb, rgbToCss } from './utils';
  * @property {string} [channels='rgbhsl'] - The channels to be shown.
  * @property {('hex'|'rgb'))} [format='hex'] - The current color format, which can be 'hex', or 'rgb'.
  * @property {string} [initialValue] - The initial color value in a parsable format.
- * @property {boolean} [noBlender=false] - Hide the spectral blender slider.
+ * @property {boolean} [noBlender=false] - Hide the color blender slider.
+ * @property {boolean} [noCopy=false] - Hide the copy action.
+ * @property {boolean} [noPicker=false] - Hide the color picker.
+ * @property {boolean} [noValue=false] - Hide the value input.
  * @property {string} [value] - The current color value in the specified format.
  */
 export class RgbColorMixer extends LitElement {
@@ -37,6 +40,9 @@ export class RgbColorMixer extends LitElement {
     format: { type: String },
     initialValue: { type: String },
     noBlender: { type: Boolean },
+    noCopy: { type: Boolean },
+    noPicker: { type: Boolean },
+    noValue: { type: Boolean },
     value: { type: String, reflect: true },
   };
 
@@ -55,6 +61,9 @@ export class RgbColorMixer extends LitElement {
 
     this.initialValue = undefined;
     this.noBlender = false;
+    this.noCopy = false;
+    this.noPicker = false;
+    this.noValue = false;
     this.value = undefined;
   }
 
@@ -544,12 +553,17 @@ export class RgbColorMixer extends LitElement {
 
     return html`
       <div ${ref(this.rootEl)} class="mixer">
-        <rgb-color-mixer-value
-          class="input-value"
-          value=${this.colorCss}
-          @update:value=${this.#handleColorInputChange}
-        ></rgb-color-mixer-value>
-        <rgb-color-mixer-ui-separator></rgb-color-mixer-ui-separator>
+        ${!this.noValue
+          ? html` <!-- Value Input -->
+              <rgb-color-mixer-value
+                class="value-input"
+                value=${this.colorCss}
+                ?noCopy=${this.noCopy}
+                ?noPicker=${this.noPicker}
+                @update:value=${this.#handleColorInputChange}
+              ></rgb-color-mixer-value>
+              <rgb-color-mixer-ui-separator></rgb-color-mixer-ui-separator>`
+          : html``}
         ${!this.noBlender
           ? html` <!-- Blender Slider -->
               <div class="blender">
@@ -613,7 +627,7 @@ export class RgbColorMixer extends LitElement {
       }
     }
 
-    .input-value {
+    .value-input {
       margin: 0 auto;
     }
   `;
