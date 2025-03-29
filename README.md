@@ -7,7 +7,7 @@ This is a RGB Color Mixer webcomponent built using lit and spectral.js.
 ```html
   <script type="module" src="https://esm.sh/lit"></script>
   <script type="module" src="https://esm.sh/spectral.js"></script>
-  <script type="module" src="https://esm.sh/rgb-color-mixer@0.7.1"></script>
+  <script type="module" src="https://esm.sh/rgb-color-mixer"></script>
 
   <rgb-color-mixer initialValue="hotpink"></rgb-color-mixer>
 ```
