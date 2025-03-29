@@ -5,6 +5,9 @@ const examples = [
   'default',
   'hsl-only',
   'no-blender',
+  'no-copy',
+  'no-picker',
+  'no-value',
   'rgb-only',
   'set-color',
 ];
