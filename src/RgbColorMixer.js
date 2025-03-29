@@ -120,7 +120,7 @@ export class RgbColorMixer extends LitElement {
   }
 
   get #colorStopsH() {
-    const [_, s, l] = this.#hslOriginalShort;
+    const [_, s, l] = this.#hslOriginal;
 
     const colorStart = `hsl(0 ${s.toFixed(4)} ${l.toFixed(4)})`;
     const colorEnd = `hsl(360 ${s.toFixed(4)} ${l.toFixed(4)})`;
@@ -129,7 +129,7 @@ export class RgbColorMixer extends LitElement {
   }
 
   get #colorStopsS() {
-    const [h, _, l] = this.#hslOriginalShort;
+    const [h, _, l] = this.#hslOriginal;
 
     const colorStart = `hsl(${h.toFixed(2)} 0 ${l.toFixed(4)})`;
     const colorEnd = `hsl(${h.toFixed(2)} 100 ${l.toFixed(4)})`;
@@ -138,7 +138,7 @@ export class RgbColorMixer extends LitElement {
   }
 
   get #colorStopsL() {
-    const [h, s, _] = this.#hslOriginalShort;
+    const [h, s, _] = this.#hslOriginal;
 
     const stops = [...Array(11).keys()].map(
       (v) => `hsl(${h.toFixed(2)} ${s.toFixed(4)} ${v * 10})`,
@@ -587,7 +587,7 @@ export class RgbColorMixer extends LitElement {
 
     .mixer {
       align-items: stretch;
-      background-color: light-dark(#f0f0f0, #202020);
+      background-color: light-dark(#e0e0e0, #303030);
       border-radius: 4px;
       display: flex;
       flex-direction: column;
