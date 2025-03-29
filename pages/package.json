@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^13.0.0",
-    "rgb-color-mixer": "^0.7.0-alpha7",
+    "rgb-color-mixer": "^0.7.1",
     "vue": "^3.5.13"
   },
   "devDependencies": {
