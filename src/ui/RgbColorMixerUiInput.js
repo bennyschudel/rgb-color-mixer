@@ -156,7 +156,7 @@ export class RgbColorMixerUiInput extends LitElement {
     input {
       padding: 4px;
       border: none;
-      border-radius: 4px;
+      border-radius: 2px;
       flex: 1 1 auto;
       width: 100%;
       font-size: 13px;
