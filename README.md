@@ -2,6 +2,16 @@
 
 This is a RGB Color Mixer webcomponent built using lit and spectral.js.
 
+## Without installation
+
+```html
+  <script type="module" src="https://esm.sh/lit"></script>
+  <script type="module" src="https://esm.sh/spectral.js"></script>
+  <script type="module" src="https://esm.sh/rgb-color-mixer@0.7.0-alpha7"></script>
+
+  <rgb-color-mixer initialValue="hotpink"></rgb-color-mixer>
+```
+
 ## Installation
 
 1. Install lit and spectral.js packages
@@ -19,16 +29,10 @@ npm install rgb-color-mixer
 ## Usage
 
 ### Minimal example
-
-```html
-  <script type="module" src="https://esm.sh/lit" />
-  <script type="module" src="https://esm.sh/spectral.js" />
+```js
+  import 'rgb-color-mixer';
 
   <rgb-color-mixer initialValue="hotpink"></rgb-color-mixer>
-
-  <script type="module">
-    import 'rgb-color-mixer';
-  </script>
 ```
 
 ### Sync with a swatch
@@ -37,9 +41,7 @@ npm install rgb-color-mixer
   <div id="swatch" style="width: 2rem; height: 2rem;"></div>
   <rgb-color-mixer id="mixer" initialValue="hotpink"></rgb-color-mixer>
 
-  <script type="module">
-    import 'rgb-color-mixer';
-
+  <script>
     const swatchEl = document.getElementById('swatch');
     const mixerEl = document.getElementById('mixer');
 
@@ -56,9 +58,7 @@ Parses the text using the [color-rgba](https://github.com/colorjs/color-rgba#rea
 ```html
   <rgb-color-mixer id="mixer"></rgb-color-mixer>
 
-  <script type="module">
-    import 'rgb-color-mixer';
-
+  <script>
     const mixerEl = document.getElementById('mixer');
 
     mixerEl.setColor('hotpink');
