@@ -38,8 +38,8 @@ export class RgbColorPickerUiSeparator extends LitElement {
       --padding: 8px;
       --margin: 8px;
 
-      --border-color--top: light-dark(#d0d0d0, #000000);
-      --border-color--bottom: light-dark(#ffffff, #404040);
+      --border-color--top: light-dark(#c8c8c8, #000000);
+      --border-color--bottom: light-dark(#f0f0f0, #404040);
 
       box-sizing: border-box;
       flex: 1 1 auto;

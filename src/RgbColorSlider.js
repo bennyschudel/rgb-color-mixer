@@ -322,8 +322,10 @@ export class RgbColorSlider extends LitElement {
       background-color: var(--color);
       border-radius: 4px;
       box-shadow:
+        inset 1px 1px 0 0 hsl(0 100 100 / 0.2),
         0 0 0 1px black,
-        0 0 0 2px white;
+        0 0 0 2px white,
+        1px 1px 4px 0 hsl(0 0 0 / 0.5);
       cursor: grab;
       left: calc(var(--width) * var(--percentage));
       position: absolute;

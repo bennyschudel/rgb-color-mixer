@@ -120,7 +120,7 @@ export class RgbColorMixer extends LitElement {
   }
 
   get #colorStopsH() {
-    const [_, s, l] = this.#hslOriginalShort;
+    const [_, s, l] = this.#hslOriginal;
 
     const colorStart = `hsl(0 ${s.toFixed(4)} ${l.toFixed(4)})`;
     const colorEnd = `hsl(360 ${s.toFixed(4)} ${l.toFixed(4)})`;
@@ -129,7 +129,7 @@ export class RgbColorMixer extends LitElement {
   }
 
   get #colorStopsS() {
-    const [h, _, l] = this.#hslOriginalShort;
+    const [h, _, l] = this.#hslOriginal;
 
     const colorStart = `hsl(${h.toFixed(2)} 0 ${l.toFixed(4)})`;
     const colorEnd = `hsl(${h.toFixed(2)} 100 ${l.toFixed(4)})`;
@@ -138,13 +138,13 @@ export class RgbColorMixer extends LitElement {
   }
 
   get #colorStopsL() {
-    const [h, s, _] = this.#hslOriginalShort;
+    const [h, s, _] = this.#hslOriginal;
 
-    const colorStart = `hsl(${h.toFixed(2)} ${s.toFixed(4)} 0)`;
-    const colorMiddle = `hsl(${h.toFixed(2)} ${s.toFixed(4)} 50)`;
-    const colorEnd = `hsl(${h.toFixed(2)} ${s.toFixed(4)} 100)`;
+    const stops = [...Array(11).keys()].map(
+      (v) => `hsl(${h.toFixed(2)} ${s.toFixed(4)} ${v * 10})`,
+    );
 
-    return [colorStart, colorMiddle, colorEnd];
+    return stops;
   }
 
   // --- getters ---
@@ -545,7 +545,7 @@ export class RgbColorMixer extends LitElement {
     return html`
       <div ${ref(this.rootEl)} class="mixer">
         <rgb-color-mixer-value
-          class="value"
+          class="input-value"
           value=${this.colorCss}
           @update:value=${this.#handleColorInputChange}
         ></rgb-color-mixer-value>
@@ -585,13 +585,9 @@ export class RgbColorMixer extends LitElement {
       }
     }
 
-    .value {
-      margin: 0 auto;
-    }
-
     .mixer {
       align-items: stretch;
-      background-color: light-dark(#f0f0f0, #202020);
+      background-color: light-dark(#e0e0e0, #303030);
       border-radius: 4px;
       display: flex;
       flex-direction: column;
@@ -607,11 +603,18 @@ export class RgbColorMixer extends LitElement {
     }
 
     .value {
+      --height: 30px;
+
       flex: 1 1 auto;
+      margin: 1px;
 
       &::part(input) {
         border-radius: 0 4px 4px 0;
       }
+    }
+
+    .input-value {
+      margin: 0 auto;
     }
   `;
 }
