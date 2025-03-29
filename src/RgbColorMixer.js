@@ -140,11 +140,11 @@ export class RgbColorMixer extends LitElement {
   get #colorStopsL() {
     const [h, s, _] = this.#hslOriginalShort;
 
-    const colorStart = `hsl(${h.toFixed(2)} ${s.toFixed(4)} 0)`;
-    const colorMiddle = `hsl(${h.toFixed(2)} ${s.toFixed(4)} 50)`;
-    const colorEnd = `hsl(${h.toFixed(2)} ${s.toFixed(4)} 100)`;
+    const stops = [...Array(11).keys()].map(
+      (v) => `hsl(${h.toFixed(2)} ${s.toFixed(4)} ${v * 10})`,
+    );
 
-    return [colorStart, colorMiddle, colorEnd];
+    return stops;
   }
 
   // --- getters ---

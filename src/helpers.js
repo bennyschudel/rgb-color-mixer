@@ -50,3 +50,32 @@ export function blackOrWhite(text) {
 
   return l > 0.179 ? 'black' : 'white';
 }
+
+
+/**
+ * Opens the EyeDropper API to allow the user to pick a color from the screen.
+ *
+ * @returns {Promise<string>} A promise that resolves to the selected color in hex format.
+ * @throws {DOMException} If the EyeDropper API fails or is not supported.
+ */
+export function openEyeDropper() {
+  return new Promise((resolve, reject) => {
+    const eyeDropper = new EyeDropper();
+
+    eyeDropper
+      .open()
+      .then((result) => {
+        resolve(result.sRGBHex);
+      })
+      .catch(reject);
+  });
+}
+
+/**
+ *  Checks if the EyeDropper API is supported.
+ *
+ * @returns {boolean} Returns true if EyeDropper is supported, otherwise false.
+ */
+export function checkHasEyeDropperSupport() {
+  return 'EyeDropper' in window;
+}

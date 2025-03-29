@@ -2,7 +2,11 @@ import { html, css, LitElement } from 'lit';
 import { ref, createRef } from 'lit/directives/ref.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
-import { createCustomEvent } from './helpers';
+import {
+  checkHasEyeDropperSupport,
+  createCustomEvent,
+  openEyeDropper as openEyeDropperHelper,
+} from './helpers';
 import { copyToClipboard } from './utils';
 
 // ---
@@ -28,6 +32,8 @@ export class RgbColorMixerValue extends LitElement {
     value: { type: String, reflect: true },
   };
 
+  #hasEyeDropperSupport = checkHasEyeDropperSupport();
+
   constructor() {
     super();
 
@@ -41,10 +47,10 @@ export class RgbColorMixerValue extends LitElement {
 
     const { value } = event.detail;
 
-    this.#emitValueupdate(value);
+    this.setValue(value);
   }
 
-  #emitValueupdate(value) {
+  #emitValueUpdate(value) {
     const event = createCustomEvent(
       'update:value',
       { value },
@@ -57,6 +63,15 @@ export class RgbColorMixerValue extends LitElement {
   // --- methods ---
 
   /**
+   * Sets the value and triggers an update event.
+   *
+   * @param {string} value - The new value to set.
+   */
+  setValue(value) {
+    this.#emitValueUpdate(value);
+  }
+
+  /**
    * Copies the current color value to the clipboard.
    *
    * @async
@@ -67,6 +82,21 @@ export class RgbColorMixerValue extends LitElement {
     await copyToClipboard(this.value);
 
     this.copyEl.value.showFeedBack('Copied');
+  }
+
+  /**
+   * Opens the EyeDropper tool to allow the user to pick a color.
+   *
+   * @returns {Promise<void>} A promise that resolves once the EyeDropper operation is complete.
+   */
+  async openEyeDropper() {
+    let value;
+
+    try {
+      value = await openEyeDropperHelper();
+    } catch (error) {}
+
+    this.setValue(value);
   }
 
   // -- lifecycle ---
@@ -110,7 +140,6 @@ export class RgbColorMixerValue extends LitElement {
               stroke-linecap="round"
               stroke-linejoin="round"
             >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
               <path
                 d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"
               />
@@ -119,7 +148,27 @@ export class RgbColorMixerValue extends LitElement {
               />
             </svg>
           </rgb-color-mixer-ui-icon-button>
-        </rgb-color-mixer-ui-field>
+        ${
+          this.#hasEyeDropperSupport
+            ? html`
+          <rgb-color-mixer-ui-icon-button @click=${this.openEyeDropper}>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M11 7l6 6" />
+              <path
+                d="M4 16l11.7 -11.7a1 1 0 0 1 1.4 0l2.6 2.6a1 1 0 0 1 0 1.4l-11.7 11.7h-4v-4z"
+              />
+            </svg>
+          </rgb-color-mixer-ui-icon-button>
+        </rgb-color-mixer-ui-field>`
+            : html``
+        }
       </div>
     `;
   }
@@ -146,9 +195,7 @@ export class RgbColorMixerValue extends LitElement {
 
       background-color: var(--color);
       border-radius: 2px;
-      box-shadow:
-        0 0 0 1px black,
-        0 0 0 2px white;
+      box-shadow: 0 0 0 1px black, 0 0 0 2px white;
       height: var(--size);
       margin: 2px;
       width: var(--size);

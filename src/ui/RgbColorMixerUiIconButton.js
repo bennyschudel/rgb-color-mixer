@@ -79,7 +79,7 @@ export class RgbColorMixerUiIconButton extends LitElement {
 
     .body {
       align-items: center;
-      border-radius: 2px;
+      border-radius: 4px;
       border: none;
       box-shadow: inset 1px 1px 1px 0 hsl(0 100 100 / 0.2),
         inset -1px -1px 1px 0 hsl(0 0 0 / 0.1);
