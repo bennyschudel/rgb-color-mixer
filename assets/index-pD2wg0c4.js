@@ -793,7 +793,7 @@ vec4 spectral_mix(vec4 color1, vec4 color2, float t) {
     `}}j(ii,"properties",{}),j(ii,"styles",ze`
     :host {
       --label-width: 32px;
-      --background-color: light-dark(#c0c0c0, #303030);
+      --background-color: light-dark(#c0c0c0, #404040);
       --color: light-dark(#202020, #f0f0f0);
 
       box-sizing: border-box;
