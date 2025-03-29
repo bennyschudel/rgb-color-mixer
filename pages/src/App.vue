@@ -12,33 +12,32 @@ const color = ref('black');
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
 
-const mixer1 = useTemplateRef<RgbColorMixer>('mixer1');
-const mixer2 = useTemplateRef<RgbColorMixer>('mixer2');
-const mixer3 = useTemplateRef<RgbColorMixer>('mixer3');
-const mixer4 = useTemplateRef<RgbColorMixer>('mixer4');
+const TOTAL_MIXERS = 8;
+
+const mixers: Array<ShallowRef<RgbColorMixer | null>> = [
+  ...Array(TOTAL_MIXERS).keys(),
+].map((i) => {
+  return useTemplateRef<RgbColorMixer>(`mixer${i}`);
+});
 
 function handleValueUpdate(event: CustomEvent) {
   color.value = event.detail.value;
 }
 
 watch(color, (value) => {
-  [mixer1, mixer2, mixer3, mixer4].map(
-    (ref: ShallowRef<RgbColorMixer | null>) => {
-      if (!ref.value) return;
+  mixers.map((ref: ShallowRef<RgbColorMixer | null>) => {
+    if (!ref.value) return;
 
-      ref.value.setColor(value);
-    },
-  );
+    ref.value.setColor(value);
+  });
 });
 
 onMounted(() => {
-  [mixer1, mixer2, mixer3, mixer4].map(
-    (ref: ShallowRef<RgbColorMixer | null>) => {
-      if (!ref.value) return;
+  mixers.map((ref: ShallowRef<RgbColorMixer | null>) => {
+    if (!ref.value) return;
 
-      useEventListener(ref.value, 'update:value', handleValueUpdate);
-    },
-  );
+    useEventListener(ref.value, 'update:value', handleValueUpdate);
+  });
 });
 </script>
 
@@ -53,33 +52,78 @@ onMounted(() => {
 
     <h1>&lt;rgb-color-mixer&gt;</h1>
     <rgb-color-mixer
-      ref="mixer1"
+      ref="mixer0"
       :initialValue="initialColor"
       @update:value="handleValueUpdate"
     ></rgb-color-mixer>
+
     <h2>RGB Only</h2>
     <code>channels="rgb"</code>
     <rgb-color-mixer
-      ref="mixer2"
+      ref="mixer1"
       :initialValue="initialColor"
       channels="rgb"
     ></rgb-color-mixer>
+
     <h2>HSL Only</h2>
     <code>channels="hsl"</code>
     <rgb-color-mixer
-      ref="mixer3"
+      ref="mixer2"
       :initialValue="initialColor"
       channels="hsl"
     ></rgb-color-mixer>
+
     <h2>No Blender</h2>
     <code>noBlender</code>
     <rgb-color-mixer
-      ref="mixer4"
+      ref="mixer3"
       :initialValue="initialColor"
       noBlender
     ></rgb-color-mixer>
 
-    <p class="note">2025, by <a href="https://twitter.com/bennyschudel" target="_blank">@bennyschudel</a>, MIT License</p>
+    <h2>No Value</h2>
+    <code>noValue</code>
+    <rgb-color-mixer
+      ref="mixer4"
+      :initialValue="initialColor"
+      noValue
+    ></rgb-color-mixer>
+
+    <h2>No Copy & No Picker</h2>
+    <code>noCopy noPicker</code>
+    <rgb-color-mixer
+      ref="mixer5"
+      :initialValue="initialColor"
+      noCopy
+      noPicker
+    ></rgb-color-mixer>
+
+    <h2>Minimal RGB</h2>
+    <code>channels="rgb" noBlender noValue</code>
+    <rgb-color-mixer
+      ref="mixer6"
+      :initialValue="initialColor"
+      channels="rgb"
+      noBlender
+      noValue
+    ></rgb-color-mixer>
+
+    <h2>Minimal HSL</h2>
+    <code>channels="hsl" noBlender noValue</code>
+    <rgb-color-mixer
+      ref="mixer7"
+      :initialValue="initialColor"
+      channels="hsl"
+      noBlender
+      noValue
+    ></rgb-color-mixer>
+
+    <p class="note">
+      2025, by
+      <a href="https://twitter.com/bennyschudel" target="_blank"
+        >@bennyschudel</a
+      >, MIT License
+    </p>
   </div>
 </template>
 
@@ -95,7 +139,11 @@ onMounted(() => {
 h1 {
   display: block;
   font-size: 40px;
-  background: linear-gradient(to right in hsl shorter hue, hsl(330 100 70.59), hsl(60 100 70.59));
+  background: linear-gradient(
+    to right in hsl shorter hue,
+    hsl(330 100 70.59),
+    hsl(60 100 70.59)
+  );
   color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
