@@ -13,6 +13,7 @@
   "dependencies": {
     "@vueuse/core": "^13.0.0",
     "rgb-color-mixer": "^0.7.2",
+    "vite-plugin-bundlesize": "^0.1.0",
     "vue": "^3.5.13"
   },
   "devDependencies": {
