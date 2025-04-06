@@ -33,7 +33,7 @@ export class RgbColorMixerBlenderStop extends LitElement {
 
   // --- private methods ---
 
-  #handleClick(event) {
+  #handleClick() {
     const value = !this.active;
 
     this.#emitActiveUpdate(value);

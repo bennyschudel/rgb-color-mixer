@@ -60,7 +60,7 @@ export function blackOrWhite(text) {
  */
 export function openEyeDropper() {
   return new Promise((resolve, reject) => {
-    const eyeDropper = new EyeDropper();
+    const eyeDropper = new window.EyeDropper();
 
     eyeDropper
       .open()
