@@ -4,10 +4,10 @@
 
 ### [&lt;rgb-color-mixer&gt;](./RgbColorMixer.html)
 
-### [&lt;rgb-color-mixer&gt;](./RgbColorMixerBlender.html)
+### [&lt;rgb-color-mixer-blender&gt;](./RgbColorMixerBlender.html)
 
-### [&lt;rgb-color-mixer&gt;](./RgbColorMixerBlenderStop.html)
+### [&lt;rgb-color-mixer-blender-stop&gt;](./RgbColorMixerBlenderStop.html)
 
-### [&lt;rgb-color-mixer&gt;](./RgbColorSlider.html)
+### [&lt;rgb-color-slider&gt;](./RgbColorSlider.html)
 
-### [&lt;rgb-color-mixer&gt;](./RgbColorSliderItem.html)
+### [&lt;rgb-color-slider-item&gt;](./RgbColorSliderItem.html)
