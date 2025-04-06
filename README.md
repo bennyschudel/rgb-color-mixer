@@ -5,8 +5,6 @@ This is a RGB Color Mixer webcomponent built using lit and spectral.js.
 ## Without installation
 
 ```html
-  <script type="module" src="https://esm.sh/lit"></script>
-  <script type="module" src="https://esm.sh/spectral.js"></script>
   <script type="module" src="https://esm.sh/rgb-color-mixer"></script>
 
   <rgb-color-mixer initialValue="hotpink"></rgb-color-mixer>
@@ -84,7 +82,7 @@ attribute-name         | type    | default value                   | description
 
 ### setColor(text)
 ```javascript
-mixer.setColor('hotpink');
+element.setColor('hotpink');
 ```
 
 It parses the text and sets the color if successful.
@@ -92,13 +90,13 @@ It parses the text and sets the color if successful.
 ### setRgb(rgb)
 
 ```javascript
-mixer.setRgb([255, 105, 180]);
+element.setRgb([255, 105, 180]);
 ```
 It sets the color using RGB values.
 
 ### setRgbNormalized(rgb)
 ```javascript
-mixer.setRgbNormalized([1.00, 0.41, 0.71]);
+element.setRgbNormalized([1.00, 0.41, 0.71]);
 ```
 It sets the color using RGB normalized values.
 
