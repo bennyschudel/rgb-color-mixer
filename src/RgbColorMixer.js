@@ -18,7 +18,7 @@ import { normalizeRgb, rgbToCss } from './utils';
  * @extends {LitElement}
  *
  * @property {string} [channels='rgbhsl'] - The channels to be shown.
- * @property {('hex'|'rgb'))} [format='hex'] - The current color format, which can be 'hex', or 'rgb'.
+ * @property {'hex'|'rgb'} [format='hex'] - The current color format, which can be 'hex', or 'rgb'.
  * @property {string} [initialValue] - The initial color value in a parsable format.
  * @property {boolean} [noBlender=false] - Hide the color blender slider.
  * @property {boolean} [noCopy=false] - Hide the copy action.
@@ -308,7 +308,7 @@ export class RgbColorMixer extends LitElement {
   /**
    * Sets the RGB color value.
    *
-   * @param {Array<number>} rgb - The RGB color value to set.
+   * @param {Array<number, number, number>} rgb - The RGB color value to set.
    */
   setRgb(rgb) {
     const rgbNormalized = normalizeRgb(rgb);
@@ -319,7 +319,7 @@ export class RgbColorMixer extends LitElement {
   /**
    * Sets the RGB values if they differ from the current values by more than a specified tolerance (1e-4).
    *
-   * @param {number[]} rgb - An array of normalized RGB values to set. Each value should be a number between 0 and 1.
+   * @param {Array<number, number, number>} rgb - An array of normalized RGB values to set. Each value should be a number between 0 and 1.
    */
   setRgbNormalized(rgb) {
     const tolerance = 1e-4;
@@ -335,17 +335,13 @@ export class RgbColorMixer extends LitElement {
 
   // --- lifecycle ---
 
-  connectedCallback() {
-    super.connectedCallback();
-  }
-
   willUpdate(props) {
     if (props.has('initialValue')) {
       this.setColor(this.initialValue);
 
       this._colorStart = this.#colorHex;
 
-      // NOTE: caclulate the blender end color by shifting the hue angle by 90 degrees
+      // NOTE: calculate the blender end color by shifting the hue angle by 90 degrees
 
       const hsl = rgbSpace.hsl(rgbaConverter(this.#colorHex));
       hsl[0] = (hsl[0] + 90) % 360;
