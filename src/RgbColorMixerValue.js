@@ -7,7 +7,7 @@ import {
   createCustomEvent,
   openEyeDropper as openEyeDropperHelper,
 } from './helpers';
-import { copyToClipboard } from './utils';
+import { copyToClipboard as copyToClipboardUtil } from './utils';
 
 // ---
 
@@ -80,12 +80,10 @@ export class RgbColorMixerValue extends LitElement {
   /**
    * Copies the current color value to the clipboard.
    *
-   * @async
-   * @function copyToClipboard
    * @returns {Promise<void>} A promise that resolves when the value has been copied to the clipboard.
    */
   async copyToClipboard() {
-    await copyToClipboard(this.value);
+    await copyToClipboardUtil(this.value);
 
     this.copyEl.value.showFeedBack('Copied');
   }

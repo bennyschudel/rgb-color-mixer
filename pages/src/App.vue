@@ -5,6 +5,8 @@ import { useEventListener, useDark, useToggle } from '@vueuse/core';
 import 'rgb-color-mixer';
 import { type RgbColorMixer } from 'rgb-color-mixer';
 
+import { APP_VERSION, API_DOCUMENTATION_URL, GITHUB_URL } from './config';
+
 const initialColor = ref('hotpink');
 
 const color = ref('black');
@@ -47,10 +49,14 @@ onMounted(() => {
       <button @click="toggleDark()">
         <span class="ml-2">{{ isDark ? 'Dark' : 'Light' }}</span>
       </button>
-      <a href="http://github.com/bennyschudel/rgb-color-mixer">Github</a>
+      <a :href="API_DOCUMENTATION_URL">API Documentation</a>
+      <a :href="GITHUB_URL">Github</a>
     </div>
 
     <h1>&lt;rgb-color-mixer&gt;</h1>
+
+    <div class="badge">{{ APP_VERSION }}</div>
+
     <rgb-color-mixer
       ref="mixer0"
       :initialValue="initialColor"
@@ -146,6 +152,7 @@ h1 {
   );
   color: transparent;
   background-clip: text;
+  margin-bottom: 0;
   -webkit-background-clip: text;
 }
 
@@ -168,6 +175,14 @@ rgb-color-mixer {
   align-items: center;
   display: inline-flex;
   gap: 16px;
+}
+
+.badge {
+  background-color: light-dark(#d0d0d0, #303030);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .note {

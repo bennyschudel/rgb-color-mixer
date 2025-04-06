@@ -1,7 +1,7 @@
 {
   "name": "rgb-color-mixer-pages",
   "homepage": "https://bennyschudel.github.io/rgb-color-mixer",
-  "version": "0.0.0",
+  "version": "0.7.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
