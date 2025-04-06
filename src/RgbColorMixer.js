@@ -95,11 +95,11 @@ export class RgbColorMixer extends LitElement {
     ];
   }
 
-  get #hslOriginalRounded() {
-    const [h, s, l] = this.#hslOriginal;
+  // get #hslOriginalRounded() {
+  //   const [h, s, l] = this.#hslOriginal;
 
-    return [Math.round(h), Math.round(s), Math.round(l)];
-  }
+  //   return [Math.round(h), Math.round(s), Math.round(l)];
+  // }
 
   get #colorStopsR() {
     const [_, g, b] = this.#rgbOriginalRounded;

@@ -98,7 +98,9 @@ export class RgbColorMixerValue extends LitElement {
 
     try {
       value = await openEyeDropperHelper();
-    } catch (error) {}
+    } catch (_error) {
+      return;
+    }
 
     this.setValue(value);
   }

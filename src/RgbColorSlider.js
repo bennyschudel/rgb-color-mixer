@@ -117,13 +117,13 @@ export class RgbColorSlider extends LitElement {
     this.#updateValue();
   }
 
-  #handlePointerUp(event) {
+  #handlePointerUp() {
     this._active = false;
 
     this.#updateValue();
   }
 
-  #handleThumbPointerDown(event) {
+  #handleThumbPointerDown() {
     this._active = true;
   }
 
