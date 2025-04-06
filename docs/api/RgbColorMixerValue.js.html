@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: RgbColorMixerValue.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: RgbColorMixerValue.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { html, css, LitElement } from 'lit';
+import { ref, createRef } from 'lit/directives/ref.js';
+import { styleMap } from 'lit/directives/style-map.js';
+
+import {
+  checkHasEyeDropperSupport,
+  createCustomEvent,
+  openEyeDropper as openEyeDropperHelper,
+} from './helpers';
+import { copyToClipboard as copyToClipboardUtil } from './utils';
+
+// ---
+
+/**
+ * A custom element that represents a value input field.
+ *
+ * @class
+ * @extends {LitElement}
+ *
+ * @property {boolean} [disabled=false] - Indicates if the input is disabled.
+ * @property {boolean} [noCopy=false] - Hide the copy action.
+ * @property {boolean} [noPicker=false] - Hide the color picker.
+ * @property {string} value - The current value of the color mixer.
+ *
+ * @fires ColorMixerValue#update:value - Fired when the value is updated.
+ */
+export class RgbColorMixerValue extends LitElement {
+  rootEl = createRef();
+  inputEl = createRef();
+  copyEl = createRef();
+
+  static properties = {
+    disabled: { type: Boolean },
+    noCopy: { type: Boolean },
+    noPicker: { type: Boolean },
+    value: { type: String, reflect: true },
+  };
+
+  #hasEyeDropperSupport = checkHasEyeDropperSupport();
+
+  constructor() {
+    super();
+
+    this.disabled = false;
+    this.noCopy = false;
+    this.noPicker = false;
+  }
+
+  // --- private methods ---
+
+  #handleValueUpdate(event) {
+    event.stopPropagation();
+
+    const { value } = event.detail;
+
+    this.setValue(value);
+  }
+
+  #emitValueUpdate(value) {
+    const event = createCustomEvent(
+      'update:value',
+      { value },
+      { bubbles: false },
+    );
+
+    this.dispatchEvent(event);
+  }
+
+  // --- methods ---
+
+  /**
+   * Sets the value and triggers an update event.
+   *
+   * @param {string} value - The new value to set.
+   */
+  setValue(value) {
+    this.#emitValueUpdate(value);
+  }
+
+  /**
+   * Copies the current color value to the clipboard.
+   *
+   * @returns {Promise&lt;void>} A promise that resolves when the value has been copied to the clipboard.
+   */
+  async copyToClipboard() {
+    await copyToClipboardUtil(this.value);
+
+    this.copyEl.value.showFeedBack('Copied');
+  }
+
+  /**
+   * Opens the EyeDropper tool to allow the user to pick a color.
+   *
+   * @returns {Promise&lt;void>} A promise that resolves once the EyeDropper operation is complete.
+   */
+  async openEyeDropper() {
+    let value;
+
+    try {
+      value = await openEyeDropperHelper();
+    } catch (error) {}
+
+    this.setValue(value);
+  }
+
+  // -- lifecycle ---
+
+  updated(props) {
+    if (props.has('value')) {
+      this.inputEl.value.value = this.value;
+    }
+  }
+
+  // --- render
+
+  render() {
+    return html`
+      &lt;div ${ref(this.rootEl)} class="body">
+        &lt;rgb-color-mixer-ui-field class="value">
+          &lt;div
+            class="swatch"
+            style=${styleMap({
+              '--color': this.value,
+            })}
+          >&lt;/div>
+          &lt;rgb-color-mixer-ui-input
+            ${ref(this.inputEl)}
+            class="input"
+            ?disabled=${this.disabled}
+            value=${this.value}
+            @update:value=${this.#handleValueUpdate}
+          >&lt;/rgb-color-mixer-ui-input>
+          ${!this.noCopy
+            ? html` &lt;!-- Copy -->
+                &lt;rgb-color-mixer-ui-icon-button
+                  ${ref(this.copyEl)}
+                  ?disabled=${this.disabled}
+                  feedback
+                  @click=${this.copyToClipboard}
+                >
+                  &lt;svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    &lt;path
+                      d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"
+                    />
+                    &lt;path
+                      d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"
+                    />
+                  &lt;/svg>
+                &lt;/rgb-color-mixer-ui-icon-button>`
+            : html``}
+          ${!this.noPicker &amp;&amp; this.#hasEyeDropperSupport
+            ? html` &lt;!-- Eye Dropper -->
+                &lt;rgb-color-mixer-ui-icon-button
+                  ?disabled=${this.disabled}
+                  @click=${this.openEyeDropper}
+                >
+                  &lt;svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    &lt;path d="M11 7l6 6" />
+                    &lt;path
+                      d="M4 16l11.7 -11.7a1 1 0 0 1 1.4 0l2.6 2.6a1 1 0 0 1 0 1.4l-11.7 11.7h-4v-4z"
+                    />
+                  &lt;/svg>
+                &lt;/rgb-color-mixer-ui-icon-button>`
+            : html``}
+        &lt;/rgb-color-mixer-ui-field>
+      &lt;/div>
+    `;
+  }
+
+  // --- styles ---
+
+  static styles = css`
+    :host {
+      --background-color: light-dark(#a0a0a0, #303030);
+    }
+
+    .body {
+      align-items: stretch;
+      background-color: var(--background-color);
+      border-radius: 8px;
+      display: inline-flex;
+      font-family: sans-serif;
+      gap: 4px;
+      padding: 4px;
+    }
+
+    .swatch {
+      --size: 20px;
+
+      background-color: var(--color);
+      border-radius: 2px;
+      box-shadow: 0 0 0 1px black, 0 0 0 2px white;
+      height: var(--size);
+      margin: 2px;
+      width: var(--size);
+    }
+
+    .value {
+      --direction: 'horizontal';
+    }
+
+    .input {
+      &amp;::part(input) {
+        font-family: Monaco, monospace;
+        width: 160px;
+        text-align: center;
+      }
+    }
+  `;
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="RgbColorMixer.html">RgbColorMixer</a></li><li><a href="RgbColorMixerBlender.html">RgbColorMixerBlender</a></li><li><a href="RgbColorMixerBlenderStop.html">RgbColorMixerBlenderStop</a></li><li><a href="RgbColorMixerValue.html">RgbColorMixerValue</a></li><li><a href="RgbColorSlider.html">RgbColorSlider</a></li><li><a href="RgbColorSliderItem.html">RgbColorSliderItem</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Apr 06 2025 19:47:27 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
