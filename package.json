@@ -3,7 +3,7 @@
   "description": "A RGB color mixer implemented as a web component",
   "license": "MIT",
   "author": "Benny Schudel",
-  "version": "0.8.0",
+  "version": "0.8.0-alpha1",
   "type": "module",
   "types": "dist/types/main.d.ts",
   "exports": {
@@ -29,9 +29,11 @@
     "e2e:update": "npx playwright test --update-snapshots",
     "pages:deploy": "./tasks/build-and-deploy-pages.sh"
   },
-  "peerDependencies": {
+  "dependencies": {
     "color-rgba": "^3.0.0",
-    "color-space": "^2.3.1",
+    "color-space": "^2.3.1"
+  },
+  "peerDependencies": {
     "lit": "^3.2.1",
     "spectral.js": "^3.0.0"
   },

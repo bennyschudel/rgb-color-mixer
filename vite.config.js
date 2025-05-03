@@ -29,7 +29,7 @@ export default defineConfig(({ command, mode }) => {
             return '[name].js';
           },
         },
-        external: [/^lit([-/].)*/, /^color-.*/, 'spectral.js'],
+        external: [/^lit([-/].)*/, 'spectral.js'],
       },
     },
     plugins: [
