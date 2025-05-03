@@ -9,23 +9,8 @@ import hslSpace from 'color-space/hsl.js';
 import { createCustomEvent } from './helpers';
 import { normalizeRgb, rgbToCss } from './utils';
 
-/**
- * A custom element for an RGB and HSL color mixer.
- *
- * This component allows users to mix colors using RGB and HSL sliders.
- *
- * @class
- * @extends {LitElement}
- *
- * @property {string} [channels='rgbhsl'] - The channels to be shown.
- * @property {'hex'|'rgb'} [format='hex'] - The current color format, which can be 'hex', or 'rgb'.
- * @property {string} [initialValue] - The initial color value in a parsable format.
- * @property {boolean} [noBlender=false] - Hide the color blender slider.
- * @property {boolean} [noCopy=false] - Hide the copy action.
- * @property {boolean} [noPicker=false] - Hide the color picker.
- * @property {boolean} [noValue=false] - Hide the value input.
- * @property {string} [value] - The current color value in the specified format.
- */
+// ---
+
 export class RgbColorMixer extends LitElement {
   rootEl = createRef();
   blenderEl = createRef();
@@ -35,6 +20,7 @@ export class RgbColorMixer extends LitElement {
     _colorEnd: { state: true },
     _colorStart: { state: true },
     _rgb: { state: true },
+    _value: { state: true },
     // ---
     channels: { type: String },
     format: { type: String },
@@ -43,7 +29,6 @@ export class RgbColorMixer extends LitElement {
     noCopy: { type: Boolean },
     noPicker: { type: Boolean },
     noValue: { type: Boolean },
-    value: { type: String, reflect: true },
   };
 
   constructor() {
@@ -53,6 +38,7 @@ export class RgbColorMixer extends LitElement {
     this._colorEnd = '#ffffff';
     this._colorStart = '#000000';
     this._rgb = [0, 0, 0];
+    this._value = undefined;
 
     this.channels = 'rgbhsl';
 
@@ -64,7 +50,22 @@ export class RgbColorMixer extends LitElement {
     this.noCopy = false;
     this.noPicker = false;
     this.noValue = false;
-    this.value = undefined;
+  }
+
+  // --- properties ---
+
+  get value() {
+    return this._value;
+  }
+
+  set value(value) {
+    throw new Error('Value is readonly.');
+  }
+
+  // --- getters ---
+
+  get colorCss() {
+    return rgbToCss(this._rgb, this.format);
   }
 
   // --- private getters ---
@@ -155,19 +156,6 @@ export class RgbColorMixer extends LitElement {
 
     return stops;
   }
-
-  // --- getters ---
-
-  /**
-   * Gets the CSS representation of the current color.
-   *
-   * @returns {string} The CSS color string in the specified display format.
-   */
-  get colorCss() {
-    return rgbToCss(this._rgb, this.format);
-  }
-
-  // --- private getters ---
 
   get #colorHex() {
     return rgbToCss(this._rgb, 'hex');
@@ -292,11 +280,6 @@ export class RgbColorMixer extends LitElement {
 
   // --- methods ---
 
-  /**
-   * Parses a color string and sets the RGB value.
-   *
-   * @param {string} text - The color string to be parsed.
-   */
   setColor(text) {
     const rgb = rgbaConverter(text);
 
@@ -305,27 +288,17 @@ export class RgbColorMixer extends LitElement {
     this.setRgb(rgb);
   }
 
-  /**
-   * Sets the RGB color value.
-   *
-   * @param {Array<number, number, number>} rgb - The RGB color value to set.
-   */
   setRgb(rgb) {
     const rgbNormalized = normalizeRgb(rgb);
 
     this.setRgbNormalized(rgbNormalized);
   }
 
-  /**
-   * Sets the RGB values if they differ from the current values by more than a specified tolerance (1e-4).
-   *
-   * @param {Array<number, number, number>} rgb - An array of normalized RGB values to set. Each value should be a number between 0 and 1.
-   */
   setRgbNormalized(rgb) {
-    const tolerance = 1e-4;
+    const TOLERANCE = 1e-4;
 
     const shouldUpdate = rgb.some(
-      (v, i) => Math.abs(v - this._rgb[i]) > tolerance,
+      (v, i) => Math.abs(v - this._rgb[i]) > TOLERANCE,
     );
 
     if (!shouldUpdate) return;
@@ -359,7 +332,7 @@ export class RgbColorMixer extends LitElement {
     }
 
     if (props.has('_rgb')) {
-      this.value = this.colorCss;
+      this._value = this.colorCss;
       this.#emitUpdateValue(this.colorCss);
     }
   }

@@ -11,6 +11,34 @@ export function clamp(value, min, max) {
 }
 
 /**
+ * Copies the given text value to the clipboard.
+ *
+ * @param {string} value - The text value to be copied to the clipboard.
+ * @returns {Promise<void>} A promise that resolves when the text has been successfully copied.
+ * @throws {Error} If the clipboard API is not supported or the copy operation fails.
+ */
+export async function copyToClipboard(value) {
+  const type = 'text/plain';
+  const clipboardItemData = {
+    [type]: value,
+  };
+  const clipboardItem = new ClipboardItem(clipboardItemData);
+  await navigator.clipboard.write([clipboardItem]);
+}
+
+/**
+ * Normalizes an RGB color value from the range [0, 255] to the range [0, 1].
+ *
+ * @param {number[]} rgb - An array containing the red, green, and blue color values.
+ * @returns {number[]} An array containing the normalized red, green, and blue color values.
+ */
+export function normalizeRgb(rgb) {
+  const [r, g, b] = rgb;
+
+  return [r / 255, g / 255, b / 255];
+}
+
+/**
  * Converts an RGB color array to a CSS color string.
  *
  * @param {number[]} rgb - An array containing the red, green, and blue color values, each ranging from 0 to 1.
@@ -30,32 +58,4 @@ export function rgbToCss(rgb, format = 'rgb') {
   }
 
   return `rgb(${red},${green},${blue})`;
-}
-
-/**
- * Normalizes an RGB color value from the range [0, 255] to the range [0, 1].
- *
- * @param {number[]} rgb - An array containing the red, green, and blue color values.
- * @returns {number[]} An array containing the normalized red, green, and blue color values.
- */
-export function normalizeRgb(rgb) {
-  const [r, g, b] = rgb;
-
-  return [r / 255, g / 255, b / 255];
-}
-
-/**
- * Copies the given text value to the clipboard.
- *
- * @param {string} value - The text value to be copied to the clipboard.
- * @returns {Promise<void>} A promise that resolves when the text has been successfully copied.
- * @throws {Error} If the clipboard API is not supported or the copy operation fails.
- */
-export async function copyToClipboard(value) {
-  const type = 'text/plain';
-  const clipboardItemData = {
-    [type]: value,
-  };
-  const clipboardItem = new ClipboardItem(clipboardItemData);
-  await navigator.clipboard.write([clipboardItem]);
 }

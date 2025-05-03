@@ -14,21 +14,31 @@ import { RgbColorSliderItem } from './RgbColorSliderItem.js';
 
 import { RgbColorMixer } from './RgbColorMixer.js';
 
-export {
-  RgbColorMixer,
-};
+export { RgbColorMixer };
 
 // ---
 
 window.customElements.define('rgb-color-mixer-ui-field', RgbColorMixerUiField);
 window.customElements.define('rgb-color-mixer-ui-icon', RgbColorMixerUiIcon);
-window.customElements.define('rgb-color-mixer-ui-icon-button', RgbColorMixerUiIconButton);
+window.customElements.define(
+  'rgb-color-mixer-ui-icon-button',
+  RgbColorMixerUiIconButton,
+);
 window.customElements.define('rgb-color-mixer-ui-input', RgbColorMixerUiInput);
-window.customElements.define('rgb-color-mixer-ui-separator', RgbColorPickerUiSeparator);
-window.customElements.define('rgb-color-mixer-ui-tool-tip', RgbColorMixerUiToolTip);
+window.customElements.define(
+  'rgb-color-mixer-ui-separator',
+  RgbColorPickerUiSeparator,
+);
+window.customElements.define(
+  'rgb-color-mixer-ui-tool-tip',
+  RgbColorMixerUiToolTip,
+);
 
 window.customElements.define('rgb-color-mixer-blender', RgbColorMixerBlender);
-window.customElements.define('rgb-color-mixer-blender-stop', RgbColorMixerBlenderStop);
+window.customElements.define(
+  'rgb-color-mixer-blender-stop',
+  RgbColorMixerBlenderStop,
+);
 window.customElements.define('rgb-color-mixer-value', RgbColorMixerValue);
 
 window.customElements.define('rgb-color-slider', RgbColorSlider);

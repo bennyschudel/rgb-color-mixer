@@ -60,7 +60,6 @@ onMounted(() => {
     <rgb-color-mixer
       ref="mixer0"
       :initialValue="initialColor"
-      @update:value="handleValueUpdate"
     ></rgb-color-mixer>
 
     <h2>RGB Only</h2>

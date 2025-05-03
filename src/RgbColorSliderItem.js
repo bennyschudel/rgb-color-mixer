@@ -1,12 +1,8 @@
 import { html, css, LitElement } from 'lit';
 import { ref, createRef } from 'lit/directives/ref.js';
 
-/**
- * A custom element representing a color item with slider, label and input field.
- *
- * @class
- * @extends {LitElement}
- */
+// ---
+
 export class RgbColorSliderItem extends LitElement {
   rootEl = createRef();
 
@@ -18,14 +14,11 @@ export class RgbColorSliderItem extends LitElement {
 
   // --- lifecycle ---
 
-    // --- render
+  // --- render
 
   render() {
     return html`
-      <div
-        ${ref(this.rootEl)}
-        class="body"
-      >
+      <div ${ref(this.rootEl)} class="body">
         <div class="slider">
           <slot name="slider"></slot>
         </div>
@@ -93,12 +86,12 @@ export class RgbColorSliderItem extends LitElement {
     .value {
       align-items: stretch;
       background-color: var(--background-color);
-      border-radius:  0 4px 4px 0;
+      border-radius: 0 4px 4px 0;
       color: var(--color);
       display: flex;
       font-variant-numeric: tabular-nums;
       justify-content: stretch;
       width: 56px;
     }
-`;
+  `;
 }

@@ -1,27 +1,12 @@
 import { html, css, LitElement } from 'lit';
 import { ref, createRef } from 'lit/directives/ref.js';
 
-// import * as d3 from './d3';
-
 import spectral from 'spectral.js';
 
 import { createCustomEvent } from './helpers';
 
 // ---
 
-/**
- * A custom element that allows of mixing two colors with a slider.
- *
- * @class
- * @extends {LitElement}
- *
- * @property {(null|'start'|'end')} colorActive - Indicates the currently active color stop.
- * @property {string} colorStart - The starting color for the blender.
- * @property {string} colorEnd - The ending color for the blender.
- *
- * @fires update:value - Dispatched when the slider value changes, providing the mixed color.
- * @fires update:coloractive - Dispatched when the active color stop changes.
- */
 export class RgbColorMixerBlender extends LitElement {
   rootEl = createRef();
 
@@ -38,14 +23,16 @@ export class RgbColorMixerBlender extends LitElement {
 
     this._sliderValue = 0;
 
-    /** @type {null | 'start' | 'end'} */
     this.colorActive = null;
   }
 
   // --- private getters ---
 
   get #colorScale() {
-    return (t) => spectral.mix(this.colorStart, this.colorEnd, t);
+    const colorA = new spectral.Color(this.colorStart);
+    const colorB = new spectral.Color(this.colorEnd);
+
+    return (t) => spectral.gradient(t, [colorA, 0], [colorB, 1]).toString();
   }
 
   get #colorStops() {
@@ -59,13 +46,13 @@ export class RgbColorMixerBlender extends LitElement {
   }
 
   #handleActiveUpdateStart(event) {
-    const value = (event.detail.value) ? 'start' : null;
+    const value = event.detail.value ? 'start' : null;
 
     this.#emitColorActiveUpdate(value);
   }
 
   #handleActiveUpdateEnd(event) {
-    const value = (event.detail.value) ? 'end' : null;
+    const value = event.detail.value ? 'end' : null;
 
     this.#emitColorActiveUpdate(value);
   }
@@ -96,10 +83,6 @@ export class RgbColorMixerBlender extends LitElement {
 
   // --- methods ---
 
-  /**
-   * Resets the slider value to zero.
-   * This method is used to clear the current value of the slider.
-   */
   resetSlider() {
     this._sliderValue = 0;
   }

@@ -44,13 +44,12 @@ export function blackOrWhite(text) {
     return 'black';
   }
 
-  const [r, g, b] = normalizeRgb(rgb);  // omit alpha channel
+  const [r, g, b] = normalizeRgb(rgb); // omit alpha channel
 
   const l = 0.2126 * r + 0.7152 * g + 0.0722 * b;
 
   return l > 0.179 ? 'black' : 'white';
 }
-
 
 /**
  * Opens the EyeDropper API to allow the user to pick a color from the screen.

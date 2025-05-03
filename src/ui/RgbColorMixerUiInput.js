@@ -5,23 +5,6 @@ import { createCustomEvent } from '../helpers';
 
 // ---
 
-/**
- * A custom element that provides an input field.
- *
- * @class
- * @extends {LitElement}
- *
- * @property {boolean} [autofocus=false] - If true, the input will automatically receive focus when the element is first updated.
- * @property {boolean} [disabled=false] - If true, the input will be disabled.
- * @property {number} [max] - The maximum value for the input when type is 'number'.
- * @property {number} [min] - The minimum value for the input when type is 'number'.
- * @property {boolean} [readonly=false] - If true, the input will be read-only.
- * @property {number} [step] - The step value for the input when type is 'number'.
- * @property {('text'|'number')} [type='text'] - The type of the input, possible values are 'text' or 'number'.
- * @property {string} value - The current value of the input.
- *
- * @fires update:value - Dispatched when the input value is updated.
- */
 export class RgbColorMixerUiInput extends LitElement {
   rootEl = createRef();
   inputEl = createRef();

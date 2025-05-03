@@ -5,17 +5,6 @@ import { blackOrWhite, createCustomEvent } from './helpers';
 
 // ---
 
-/**
- * A custom element that allows activating a color stop.
- *
- * @class
- * @extends {LitElement}
- *
- * @property {boolean} active - Indicates if the blender stop is active or not.
- * @property {string} value - The color value of the blender stop in hexadecimal format.
- *
- * @fires update:active - Dispatched when the active state is updated.
- */
 export class RgbColorMixerBlenderStop extends LitElement {
   static properties = {
     _color: { state: true },

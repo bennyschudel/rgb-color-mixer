@@ -5,26 +5,8 @@ import { ref, createRef } from 'lit/directives/ref.js';
 import { createCustomEvent } from './helpers';
 import { clamp } from './utils';
 
-/**
- * A custom element that provides a color slider.
- *
- * @class
- * @extends {LitElement}
- *
- * @property {Function} colorFunc - Function to generate color based on value.
- * @property {Array<string>} colorStops - Array of color stops for the blender.
- * @property {string} gradientMode - Mode of the color blender.
- * @property {number} height - Height of the slider.
- * @property {number} max - Maximum value of the slider.
- * @property {number} min - Minimum value of the slider.
- * @property {number} step - Step value for the slider.
- * @property {number} stepMultiplier - Multiplier for step value.
- * @property {number} stepMultiplierFast - Multiplier for the fast step value.
- * @property {number} value - Current value of the slider.
- * @property {number} width - Width of the slider.
- *
- * @fires RgbColorSlider#update:value - Dispatched when the value property is updated.
- */
+// ---
+
 export class RgbColorSlider extends LitElement {
   rootEl = createRef();
   trackEl = createRef();
@@ -128,7 +110,9 @@ export class RgbColorSlider extends LitElement {
   }
 
   #handleKeyDown(event) {
-    const multiplier = event.shiftKey ? this.stepMultiplierFast : this.stepMultiplier;
+    const multiplier = event.shiftKey
+      ? this.stepMultiplierFast
+      : this.stepMultiplier;
 
     switch (event.key) {
       case 'ArrowLeft':
@@ -161,12 +145,14 @@ export class RgbColorSlider extends LitElement {
 
   // --- methods ---
 
-  /**
-   * Sets the value of the slider, clamping it within the min and max range,
-   * adjusting it to the nearest step, and calculating the corresponding percentage.
-   *
-   * @param {number} value - The value to set for the slider.
-   */
+  nextStep(multiplier = 1) {
+    this.value = clamp(this.value + this.step * multiplier, this.min, this.max);
+  }
+
+  previousStep(multiplier = 1) {
+    this.value = clamp(this.value - this.step * multiplier, this.min, this.max);
+  }
+
   setValue(value) {
     const { width } = this;
 
@@ -179,26 +165,6 @@ export class RgbColorSlider extends LitElement {
     const dx = width * percentage;
 
     this.#calculatePercentage(dx, width);
-  }
-
-  /**
-   * Decreases the current value by a step multiplied by the given multiplier.
-   * The resulting value is clamped between the minimum and maximum values.
-   *
-   * @param {number} [multiplier=1] - The multiplier to apply to the step value.
-   */
-  previousStep(multiplier = 1) {
-    this.value = clamp(this.value - (this.step * multiplier), this.min, this.max);
-  }
-
-  /**
-   * Advances the current value by a step, optionally multiplied by a given factor.
-   * The resulting value is clamped between the minimum and maximum values.
-   *
-   * @param {number} [multiplier=1] - The multiplier to apply to the step value.
-   */
-  nextStep(multiplier = 1) {
-    this.value = clamp(this.value + (this.step * multiplier), this.min, this.max);
   }
 
   // --- lifecycle ---
@@ -321,11 +287,8 @@ export class RgbColorSlider extends LitElement {
 
       background-color: var(--color);
       border-radius: 4px;
-      box-shadow:
-        inset 1px 1px 0 0 hsl(0 100 100 / 0.2),
-        0 0 0 1px black,
-        0 0 0 2px white,
-        1px 1px 4px 0 hsl(0 0 0 / 0.5);
+      box-shadow: inset 1px 1px 0 0 hsl(0 100 100 / 0.2), 0 0 0 1px black,
+        0 0 0 2px white, 1px 1px 4px 0 hsl(0 0 0 / 0.5);
       cursor: grab;
       left: calc(var(--width) * var(--percentage));
       position: absolute;
