@@ -1,12 +1,8 @@
 import { html, css, LitElement } from 'lit';
 import { ref, createRef } from 'lit/directives/ref.js';
 
-/**
- * A custom element representing an icon.
- *
- * @class
- * @extends {LitElement}
- */
+// ---
+
 export class RgbColorMixerUiIcon extends LitElement {
   rootEl = createRef();
 
@@ -18,14 +14,11 @@ export class RgbColorMixerUiIcon extends LitElement {
 
   // --- lifecycle ---
 
-    // --- render
+  // --- render
 
   render() {
     return html`
-      <div
-        ${ref(this.rootEl)}
-        class="body"
-      >
+      <div ${ref(this.rootEl)} class="body">
         <slot></slot>
       </div>
     `;

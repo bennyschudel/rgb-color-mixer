@@ -1,17 +1,12 @@
 import { html, css, LitElement } from 'lit';
 import { ref, createRef } from 'lit/directives/ref.js';
 
-/**
- * A custom element that provides an visual separator.
- *
- * @class
- * @extends {LitElement}
- */
+// ---
+
 export class RgbColorPickerUiSeparator extends LitElement {
   rootEl = createRef();
 
-  static properties = {
-  };
+  static properties = {};
 
   constructor() {
     super();
@@ -19,16 +14,10 @@ export class RgbColorPickerUiSeparator extends LitElement {
 
   // --- lifecycle ---
 
-    // --- render
+  // --- render
 
   render() {
-    return html`
-      <div
-        ${ref(this.rootEl)}
-        class="body"
-      >
-      </div>
-    `;
+    return html` <div ${ref(this.rootEl)} class="body"></div> `;
   }
 
   // --- styles ---

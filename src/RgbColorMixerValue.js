@@ -11,19 +11,6 @@ import { copyToClipboard as copyToClipboardUtil } from './utils';
 
 // ---
 
-/**
- * A custom element that represents a value input field.
- *
- * @class
- * @extends {LitElement}
- *
- * @property {boolean} [disabled=false] - Indicates if the input is disabled.
- * @property {boolean} [noCopy=false] - Hide the copy action.
- * @property {boolean} [noPicker=false] - Hide the color picker.
- * @property {string} value - The current value of the color mixer.
- *
- * @fires ColorMixerValue#update:value - Fired when the value is updated.
- */
 export class RgbColorMixerValue extends LitElement {
   rootEl = createRef();
   inputEl = createRef();
@@ -68,31 +55,16 @@ export class RgbColorMixerValue extends LitElement {
 
   // --- methods ---
 
-  /**
-   * Sets the value and triggers an update event.
-   *
-   * @param {string} value - The new value to set.
-   */
-  setValue(value) {
-    this.#emitValueUpdate(value);
-  }
-
-  /**
-   * Copies the current color value to the clipboard.
-   *
-   * @returns {Promise<void>} A promise that resolves when the value has been copied to the clipboard.
-   */
   async copyToClipboard() {
     await copyToClipboardUtil(this.value);
 
     this.copyEl.value.showFeedBack('Copied');
   }
 
-  /**
-   * Opens the EyeDropper tool to allow the user to pick a color.
-   *
-   * @returns {Promise<void>} A promise that resolves once the EyeDropper operation is complete.
-   */
+  setValue(value) {
+    this.#emitValueUpdate(value);
+  }
+
   async openEyeDropper() {
     let value;
 
